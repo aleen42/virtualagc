@@ -213,7 +213,7 @@ To match the default setup of the installer program execute the following:
 
 You can make a desktop icon called "Virtual AGC" that links to *~/VirtualAGC/bin/VirtualAGC*. The image normally used for the desktop icon is found at *~/VirtualAGC/bin/ApolloPatch2.png*.
 
-如果你嘗試使用 ACA 模擬器 (操縱杆) 的過程中, 它並不能工作起來的話, 你可以在這裡找到配置的一些相關信息:
+如果你在嘗試使用 ACA 模擬器 (操縱杆) 的過程中, 並没有使其工作起來的話, 你可以在這裡找到配置的一些相關信息:
 http://www.ibiblio.org/apollo/yaTelemetry.html#Joystick_configuration_for_use_with_the
 
 If you try to use the ACA simulation (joystick) and it doesn't work you can find some information on configuring it here:
@@ -247,95 +247,157 @@ Install POSIX Threads for Windows ("pthreads").  You can do this by unpacking th
 
 Install GNU readline for Windows. You should find zipfiles of both "binaries" and "developer files" are available for download.  They should both be downloaded and unpacked into /usr/local.  (I.e., each zipfile contains directories like bin/, include/, lib/, and so on, and we want these to be merged into /usr/local/bin/, usr/local/include/, etc.)
 
+安裝一個正則表達式庫. MinGW 項目有一個你可以使用的"免費"正則庫 ("libgnurx"). 下載"bin"及"dev"包, 並解壓至 /usr/local.
+
 Install a regular-expression library.  The MinGW project has a "contributed" regex library ("libgnurx") that you can use.  Download both the "bin" and "dev" tarballs and unpack them into /usr/local.
 
+如果以上步驟均成功進行, 那麼你可以通過一下的方式去構建 Virtual AGC:
+
 If all of this was done correctly you can build the Virtual AGC as follows:
+
+解壓開發環境的軟體包到你的根目錄:
 
 Unpack the development tarball in your home directory:
 
     tar -xjvf yaAGC-dev-YYYYMMDD.tar.bz2
 
+構建它:
+
 Build it:
 
     make -C yaAGC WIN32=yes
 
+在 Windows7 環境下 (並不是 XP), 你還需要拷貝 c:\MinGW\bin\mingwm10.dll 到 yaAGC/VirtualAGC/temp/lVirtualAGC/Resources/.
+
 On Windows 7  (but not on XP) it is also necessary  to copy c:\MinGW\bin\mingwm10.dll to yaAGC/VirtualAGC/temp/lVirtualAGC/Resources/.  
+
+上面的構建將會產生一個"安裝目錄" yaAGC/VirtualAGC/temp/lVirtualAGC/. 由於該目錄是可重新定位但需要跟 Msys 環境保持一致, 因此, 你可以把它移動到你喜歡的地方. 不管你是否真的需要為了執行程序而創建一個桌面圖標, 你都需要把該圖標指向到可執行文件 lVirtualAGC\bin\VirtualAGC.exe 並且需要使用 lVirtualAGC\Resources\ 作為"開始的目錄". 一般用於圖標的圖片是位於 lVirtualAGC\Resources 目錄下的 ApolloPatch2.jpg 文件.
 
 This will create a directory yaAGC/VirtualAGC/temp/lVirtualAGC/ which is the "installation directory".  This directory is relocatable and need to remain within the Msys environment so you can move it wherever you like.  Regardless you really need to create a desktop icon in order to run the program.  The desktop icon should point to lVirtualAGC\bin\VirtualAGC.exe as the executable, and should use a "starting directory" of lVirtualAGC\Resources\.  The graphic normally used for the desktop icon is ApolloPatch2.jpg in the lVirtualAGC\Resources directory.
 
 ## Mac OS X
 
+像下面一樣, 從命令行中解壓開發者環境-快照的軟體包:
+
 From the command line unpack the development-snapshot tarball as follows:
 
     tar --bzip2 -xf yaAGC-dev-YYYYMMDD.tar.bz2
 
+獲取名為 Terminator 的 dmg 文件:
+https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jessies/terminator-26.159.6816.zip
+
 Get the Terminator application's dmg file:
 https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jessies/terminator-26.159.6816.zip
 
+打開該 Terminator 的 dmg 文件並拖拽至上述所創建的工作目錄 yaAGC/ 下.
+
 Open the Terminator dmg file and drag the Terminator application to the working directory in which you created yaAGC/ above.
+
+在命令行上進入到工作目錄, 並從 Terminator.app 中創建出一個軟體包:
 
 From a command line in that working directory, make a tarball from Terminator.app:
 
     tar -cjvf Terminator.app.tar.bz2 Terminator.app
 
+一旦創建成功, 你就可以刪除該 Terminator 程序以及其 dmg 文件.
+
 Once you have the tarball, you can delete the Terminator app and its dmg file.
+
+從工作目錄中 (並不是從 yaGC/ 目錄中) 構建 AGC:
 
 From the working directory (not from within the yaAGC/ directory) build Virtual AGC:
 
     make -C yaAGC MACOSX=yes
 
+此時, 你就可以在文件夾 yaAGC/VirtualAGC/temp/ 找到 VirtualAGC 應用程序.
 
 In the  folder yaAGC/VirtualAGC/temp/ you will now find the VirtualAGC application.
+
+然後, 你就可以把該應用程序從 yaAGC/VirtualAGC/temp/ 拖拽到桌面.
 
 Drag the VirtualAGC application from yaAGC/VirtualAGC/temp/ to the desktop.
 
 ## FreeBSD
 
+像下面那樣, 從命令行中解壓開發者環境-快照的軟體包:
+
 From the command line unpack the development-snapshot tarball as follows:
     tar --bzip2 -xf yaAGC-dev-YYYYMMDD.tar.bz2
+
+解壓後, 會有一個名為 "yaAGC" 的文件夾產生. 然後就可以構建程序:
 
 After unpacking there will be a new directory called "yaAGC". To build the program:
 
     gmake FREEBSD=yes
 
+不要執行"configure"和"gmake install"
+
 Do not "configure" and do not "gmake install".
 
+此時, 你會發現有一個 yaAGC/VirtualAGC/temp/lVirtualAGC/ 文件夾被創建出來.
+
 You will find that this has created a directory yaAGC/VirtualAGC/temp/lVirtualAGC/.  
+
+為了匹配安裝程序的默認配置, 你需要執行以下的命令:
 
 To match the default setup of the installer program execute the following:
 
     mv yaAGC/VirtualAGC/temp/lVirtualAGC ~/VirtualAGC
 
+當然, 你也可以創建一個桌面圖標, 並命名為 "Virtual AGC". 該圖表連接於 /VirtualAGC/bin/VirtualAGC. 圖標的圖票一般會使用 /VirtualAGC/bin/ApolloPatch2.png.
+
 You can make a desktop icon called "Virtual AGC" that links to /VirtualAGC/bin/VirtualAGC. The image normally used for the desktop icon is found at /VirtualAGC/bin/ApolloPatch2.png.
+
+如果你在嘗試使用 ACA 模擬器 (操縱杆) 的過程中, 並没有使其工作起來的話, 你可以在這裡找到配置的一些相關信息:
+http://www.ibiblio.org/apollo/yaTelemetry.html#Joystick_configuration_for_use_with_the
 
 If you try to use the ACA simulation (joystick) and it doesn't work you can find some information on configuring it here:
 http://www.ibiblio.org/apollo/yaTelemetry.html#Joystick_configuration_for_use_with_the
 
 ## Solaris
 
+解壓 Virtual AGC 的快照軟體包:
+
 Unpack the Virtual AGC snapshot tarball:
 
     tar --bzip2 -xf yaAGC-dev-YYYYMMDD.tar.bz2
+
+打開 yaAGC/ 文件夾並進行構建:
 
 Open the yaAGC/ directory and build:
 
     make SOLARIS=yes
 
+不要執行"configure"和"gmake install".
+
 Do not "configure" and do not "gmake install".
 
+你會發現有一個 yaAGC/VirtualAGC/temp/lVirtualAGC/ 文件夹被创建出来.
+
 You'll find that this has created a directory yaAGC/VirtualAGC/temp/lVirtualAGC/.
+
+為了匹配安裝程序的默認配置, 你需要執行以下的命令:
 
 To match the default setup of the installer program execute the following:
 
     mv yaAGC/VirtualAGC/temp/lVirtualAGC ~/VirtualAGC
 
+當然, 你也可以創建一個桌面圖標, 並命名為 "Virtual AGC". 該圖表連接於 /VirtualAGC/bin/VirtualAGC. 圖標的圖票一般會使用 /VirtualAGC/bin/ApolloPatch2.png.
+
 You can make a desktop icon called "Virtual AGC" that links to /VirtualAGC/bin/VirtualAGC. The image normally used for the desktop icon is found at /VirtualAGC/bin/ApolloPatch2.png.
+
+不幸的是, ACA 模擬器 (操縱杆) 並不能在該環境下工作.
 
 Unfortunately the ACA simulation (joystick) programs do not work in this environment.
 
-# Endnotes
+# Endnotes | 結語
+
+該 Readme 文件是從包含在主程序網頁中的信息所書寫處理的:
+http://www.ibiblio.org/apollo/index.html
 
 This Readme was created from information contained in the main project website here:
 http://www.ibiblio.org/apollo/index.html
+
+項目的頁面是由 Ronald Burkey 進行製作, 而第一版的 Readme 是由 Shane Coughlan 進行編寫.
 
 The project website was created by Ronald Burkey. The first version of this Readme was compiled by Shane Coughlan.
